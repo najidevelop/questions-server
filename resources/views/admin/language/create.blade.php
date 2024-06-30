@@ -32,7 +32,7 @@
                     <input type="text" class="form-controll" name="code" id="code" placeholder="* الرمز"
                         value="">
 
-                    <span id="code_error" class="error invalid-feedback"></span>
+                    <span id="code-error" class="error invalid-feedback"></span>
 
                 </div>
             </div>
@@ -42,7 +42,7 @@
                 <div class="col-sm-10">
                     <input type="text" class="form-controll" name="name" id="name" placeholder="* الاسم"
                         value="">
-                    <span id="name_error" class="error invalid-feedback"></span>
+                    <span id="name-error" class="error invalid-feedback"></span>
 
                 </div>
             </div>

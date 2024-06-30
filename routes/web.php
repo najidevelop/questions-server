@@ -19,7 +19,7 @@ use  App\Http\Controllers\Web\ClientController;
 use  App\Http\Controllers\Web\MessageController;
 use  App\Http\Controllers\Web\SocialController;
 use App\Http\Controllers\Auth\SocialiteController;
-
+use App\Http\Controllers\Web\CategoryQuesController;
 //site
 use App\Http\Controllers\HomeController;
 //use Illuminate\Support\Facades\Facade\Artisan;
@@ -160,30 +160,38 @@ Route::middleware(['auth:web', 'verified'])->prefix('admin')->group(function () 
             Route::delete('/delfooter/{id}', [SettingController::class, 'delfooter']);
 
         });
+//questions
+//category
+Route::resource('categoryques', CategoryQuesController::class, ['except' => ['update']]);
+Route::prefix('categoryques')->group(function () {
+    Route::post('/update/{id}', [CategoryQuesController::class, 'update'])->name('categoryques.update');
+    
+});   
 
-        Route::prefix('design')->group(function () {
-            Route::get('/headsocial', [LocationController::class, 'getheadsocial'])->name('design.headsocial');
-            Route::get('/footersocial', [LocationController::class, 'footersocial'])->name('design.footersocial');
+
+        // Route::prefix('design')->group(function () {
+        //     Route::get('/headsocial', [LocationController::class, 'getheadsocial'])->name('design.headsocial');
+        //     Route::get('/footersocial', [LocationController::class, 'footersocial'])->name('design.footersocial');
             
-            Route::post('/addheadsocial', [LocationController::class, 'addheadsocial']);
-            Route::delete('/delheadsocial/{id}', [LocationController::class, 'delheadsocial']);
+        //     Route::post('/addheadsocial', [LocationController::class, 'addheadsocial']);
+        //     Route::delete('/delheadsocial/{id}', [LocationController::class, 'delheadsocial']);
 
-            Route::post('/addfootsocial', [LocationController::class, 'addfootsocial']);
-            Route::delete('/delfootsocial/{id}', [LocationController::class, 'delfootsocial']);
+        //     Route::post('/addfootsocial', [LocationController::class, 'addfootsocial']);
+        //     Route::delete('/delfootsocial/{id}', [LocationController::class, 'delfootsocial']);
 
-            Route::get('/getsortpage/{loc}', [LocationController::class, 'headsocialsort']);
-            Route::get('/hsocialsavesort', [LocationController::class, 'headsocialsavesort']);
-            Route::get('/getsort/{loc}', [LocationController::class, 'hsocialsort']);
-            Route::post('/updatesort', [LocationController::class, 'updatesort']);
-            //footer section
-            Route::get('/sections/{name}', [LocationController::class, 'getsectionsbyname'])->name('design.sections');
-            Route::get('/editfooter/{id}', [PostController::class, 'editfooter']);
-            //main menu sec
-            Route::get('/editmenu/{id}', [CategoryController::class, 'editmenu']);
-            //submenu  
-            Route::get('/categorysub/{id}', [CategoryController::class, 'getcatbyparent']);
+        //     Route::get('/getsortpage/{loc}', [LocationController::class, 'headsocialsort']);
+        //     Route::get('/hsocialsavesort', [LocationController::class, 'headsocialsavesort']);
+        //     Route::get('/getsort/{loc}', [LocationController::class, 'hsocialsort']);
+        //     Route::post('/updatesort', [LocationController::class, 'updatesort']);
+        //     //footer section
+        //     Route::get('/sections/{name}', [LocationController::class, 'getsectionsbyname'])->name('design.sections');
+        //     Route::get('/editfooter/{id}', [PostController::class, 'editfooter']);
+        //     //main menu sec
+        //     Route::get('/editmenu/{id}', [CategoryController::class, 'editmenu']);
+        //     //submenu  
+        //     Route::get('/categorysub/{id}', [CategoryController::class, 'getcatbyparent']);
       
-        });
+        // });
 
 
        // Route::resource('post', PostController::class, ['except' => ['update']]);

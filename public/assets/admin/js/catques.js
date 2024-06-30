@@ -27,7 +27,7 @@ $(document).ready(function () {
 // sendform('#logo-form');
 // });
 	function ClearErrors() {
-		//$("#" + "info-form-error").html('');
+		$("#" + "info-form-error").html('');
 		$("." + "error").html('').hide();
 		
 	 
