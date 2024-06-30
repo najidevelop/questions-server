@@ -1,0 +1,96 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+/*F2AF2F*/
+/* breadcrumbs */
+.breadcrumbs{
+    background-color:#ffff;
+    webkit-box-shadow: 0 0 5px #dedede;
+    box-shadow: 0 0 5px #dedede;
+}
+.breadcrumbs h1{
+    font-size: 25px;
+    font-weight: 700;
+    color: #F2AF2F;    
+}
+
+.breadcrumbs .crumbs a{
+    text-decoration:none;
+    color:#F2AF2F;
+}
+.reply_per h4{
+    font-size:14px;
+}
+.block_name_time span{
+    font-size:12px;
+}
+.block_name_time span i{
+    margin-left:5px;
+}
+.list-reply-children {
+    padding-right:80px;
+}
+.sub-children-reply{
+    padding-right:80px;
+}
+.list-reply-children li{
+    list-style:none;
+}
+/* respond */
+.respond, .related-posts{
+    margin-top:.5rem;
+    padding:20px;
+    background: #FFF;
+    -moz-box-shadow: 0 0 5px #dedede;
+    -webkit-box-shadow: 0 0 5px #dedede;
+    box-shadow: 0 0 5px #dedede;
+}
+.boxedtitle h2{
+    color:#F2AF2F;
+    font-size: 18px !important;
+    font-weight: 700;
+}
+.respond form button{
+    background-color:#444444;
+    color:#FFF;
+    border:none;
+    outline:none;
+    font-weight:700;
+}
+.respond form button:hover{
+    color:#F2AF2F;
+}
+.respond form span{
+    color:red;
+}
+.related-posts-list{
+    padding:0;
+}
+.related-posts-list .related-item{
+    width: 100%;
+    list-style: none;
+}
+.related-posts-list .related-item h3 a{
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 700;
+    color: #444;
+    text-decoration: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 11px;
+}
+.related-posts-list .related-item h3 a:hover{
+    color:#F2AF2F;
+}
+
+
+
+
+
+
+
+

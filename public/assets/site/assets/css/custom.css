@@ -1,0 +1,12 @@
+ .account-form {
+    margin-bottom: 20px;
+ }
+
+ .message-box {
+    border-style: solid;
+    border-width: thin;
+    padding: 8px;
+    border-color: #F2AF2F;
+    margin-bottom: 5px;
+    margin-top: 5px;
+ }
