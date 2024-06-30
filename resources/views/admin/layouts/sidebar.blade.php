@@ -22,6 +22,38 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link " href="{{ route('language.index') }}">
+                        <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons-round opacity-10">table_view</i>
+                        </div>
+                        <span class="nav-link-text me-1">اللغة</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{ route('admin') }}">
+                        <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons-round opacity-10">table_view</i>
+                        </div>
+                        <span class="nav-link-text me-1">التصنيفات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{ route('admin') }}">
+                        <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons-round opacity-10">table_view</i>
+                        </div>
+                        <span class="nav-link-text me-1">المستويات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{ route('admin') }}">
+                        <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons-round opacity-10">table_view</i>
+                        </div>
+                        <span class="nav-link-text me-1">الاسئلة</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link " href="{{route('social.index')}}">
                         <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons-round opacity-10">view_in_ar</i>
@@ -67,14 +99,7 @@
                         <span class="nav-link-text me-1">الاعضاء</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="{{ route('admin') }}">
-                        <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons-round opacity-10">table_view</i>
-                        </div>
-                        <span class="nav-link-text me-1">الأخبار</span>
-                    </a>
-                </li>
+             
                 <li class="nav-item" id="nb">
                     <a class="nav-link " href="{{url('admin/page')}}">
                         <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">

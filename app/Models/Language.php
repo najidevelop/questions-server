@@ -60,4 +60,12 @@ class Language extends Model
      {
          return $this->hasMany(LangPost::class,'lang_id');
      }
+     public function questions(): HasMany
+     {
+         return $this->hasMany(Question::class,'lang_id');
+     }
+     public function clients(): HasMany
+     {
+         return $this->hasMany(Client::class,'lang_id');
+     }
 }

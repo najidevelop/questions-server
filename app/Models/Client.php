@@ -42,6 +42,10 @@ class Client extends Authenticatable
         'gender',
         'birthdate',
         'facebook_id', 
+        'total_balance',
+'balance',
+'lang_id',
+
     ];
 
     /**
@@ -72,12 +76,21 @@ class Client extends Authenticatable
      {
          return $this->hasMany(ClientSocial::class,'client_id');
      }
-     public function senders(): HasMany
+     //
+     public function answersclients(): HasMany
      {
-         return $this->hasMany(MessageModel::class,'sender_id');
+         return $this->hasMany(AnswersClient::class);
      }
-     public function recipients(): HasMany
+     public function clientpoints(): HasMany
      {
-         return $this->hasMany(MessageModel::class,'recipient_id');
+         return $this->hasMany(ClientPoint::class,'client_id');
+     }
+     public function pointtrans(): HasMany
+     {
+         return $this->hasMany(PointTrans::class,'client_id');
+     }
+     public function language(): BelongsTo
+     {
+         return $this->belongsTo(Language::class,'lang_id')->withDefault();
      }
 }

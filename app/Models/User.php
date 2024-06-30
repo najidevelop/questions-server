@@ -100,6 +100,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class,'updateuser_id')->withDefault();
     }
+   
     //
    
     

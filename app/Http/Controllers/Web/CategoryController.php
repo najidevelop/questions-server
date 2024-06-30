@@ -26,7 +26,14 @@ class CategoryController extends Controller
             "pages" => $items,
         ]);
     }
+    public function Ques_categoryindex()
+    {
+        $items = Category::where('code', 'ques')->get();
 
+        return view("admin.page.show", [
+            "pages" => $items,
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */

@@ -147,12 +147,15 @@ class LanguageController extends Controller
     
       //delete user
       $item = Language::find($id);
-      //delete image
-      $oldimagename =  $item ->image;
-      $strgCtrlr = new StorageController();
-      $path = $strgCtrlr->path['languages'];
-      Storage::delete("public/" .$path. '/' . $oldimagename);
       if (!( $item  === null)) {
+           //delete image
+        if(!is_null($item ->image)){
+          $oldimagename =  $item ->image;
+          $strgCtrlr = new StorageController();
+          $path = $strgCtrlr->path['languages'];
+          Storage::delete("public/" .$path. '/' . $oldimagename);
+        }
+        
         Language::find($id)->delete();
       }
       return redirect()->route('language.index');
