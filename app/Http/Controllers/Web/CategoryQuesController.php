@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Http\Requests\Category\StoreCategoryRequest;
  
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 class CategoryQuesController extends Controller
 {
     /**
@@ -101,16 +102,62 @@ class CategoryQuesController extends Controller
     public function edit( $id)
     {
      $item = Category::find($id);
-
-        return view("admin.catques.edit", ["category" => $item,]);
+     $lang_list = Language::orderByDesc('is_default')->with(
+        [
+            'langposts' => function ($q) use ($id) {
+                $q->where('category_id', $id);
+            }
+        ]
+    )->get();
+        return view("admin.catques.edit", ["category" => $item,'lang_list'=>$lang_list]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreCategoryRequest $request,$id)
     {
-        //
+        $formdata = $request->all();
+        $validator = Validator::make(
+            $formdata,
+            $request->rules(),
+            $request->messages()
+        );
+        if ($validator->fails()) {
+
+            return response()->json($validator);
+
+        } else {
+            // check if slug exist
+            //run first time only
+            $tmpslug = "";
+            if ($formdata["slug"] == "" || empty($formdata["slug"])) {
+                $tmpslug = Str::slug($formdata["title"]); 
+                } else {
+                    $tmpslug = Str::slug($formdata["slug"]) ;
+                }
+            $promodel = Category::where('slug', $tmpslug)->whereNot('id', $id)->first();
+            if (!is_null($promodel)) {
+                // error
+                return response()->json([
+                    "errors" => ["slug" => [__('messages.this field exist', [], 'ar')]]
+                ], 422);
+                //end run
+            } else {
+                Category::find($id)->update([
+                    //'user_name'=>$formdata['user_name'],
+                      'title' => $formdata['title'],
+                      'desc' => $formdata['desc'],
+                    'meta_key' => isset($formdata['metakey']) ? $formdata['metakey'] : '',
+                    'slug' => $tmpslug ,
+                    'status' => isset($formdata["status"]) ? 1 : 0,
+                    'update_user_id' => Auth::user()->id,
+                ]);
+
+                return response()->json("ok");
+            }
+
+        }
     }
 
     /**

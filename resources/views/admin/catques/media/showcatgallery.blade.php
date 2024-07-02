@@ -14,6 +14,7 @@
 	e.preventDefault();	 
 	imgId=$(this).attr("id");
 	imgId=imgId.replace("del-","");
+	delType = 'image';
 	});
   $('.update').on('click', function (e) {
 			e.preventDefault();	 
@@ -31,20 +32,20 @@
 				url: urlval,
 				type: "GET",	 
 				success: function (data) {		 
-					//endLoading();				
+				//	endLoading();				
 					if (data.length == 0) {
 					//	noteError();
 					} else   {
 						$('#imgshow-edit').attr('src',data.image_path);
 						$('#caption-edit').html(data.caption);
-						$("#btn-cancel-modal").trigger("click");					 
+						//$("#btn-cancel-modal").trigger("click");					 
 					}	
 				}, error: function (errorresult) {
-				//	endLoading();
+					//endLoading();
 					var response = $.parseJSON(errorresult.responseText);			
-				//	noteError();	
+					//noteError();	
 				}, finally: function () {
-					//endLoading();				
+				//	endLoading();				
 				}
 			});
 			}
@@ -68,5 +69,17 @@ function resetForm(formId) {
 	$('#imgshow-edit').attr("src", emptyimg);
 	//$('#iconshow').attr("src", emptyimg);
 }
+$('.btn-modal').on('click', function (e) {
+
+var destid=	$(this).attr('data-target');
+$(destid).removeClass('modal').removeClass('fade').addClass('modal-backdrop').addClass('show');
+$(destid).modal({
+	backdrop: 'static',
+	keyboard: false,
+	show: true
+});
+});
+
+
 });
   </script>

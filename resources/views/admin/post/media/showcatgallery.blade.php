@@ -2,7 +2,7 @@
 <div class="col-sm-2">
   <div  class="image-contain" >
     <img src="{{ $mediaproj->mediastore->image_path }}" class="img-fluid mb-2 image-show" alt="{{ $mediaproj->mediastore->caption }}"/>
-    <input id="edit-{{$mediaproj->mediastore->id }}" class="btn btn-xs btn-primary update " type="button" value="Edit" data-toggle="modal" data-target="#modal-editimage">
+    <input id="edit-{{$mediaproj->mediastore->id }}" class="btn btn-xs btn-primary update " type="button" value="تعديل" data-toggle="modal" data-target="#modal-editimage">
     <input id="del-{{$mediaproj->mediastore->id }}" class="btn btn-xs btn-danger delete " type="button" value="Delete" data-toggle="modal" data-target="#modal-delete">
 
   </div>

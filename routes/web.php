@@ -20,6 +20,7 @@ use  App\Http\Controllers\Web\MessageController;
 use  App\Http\Controllers\Web\SocialController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Web\CategoryQuesController;
+use App\Http\Controllers\Web\LevelController;
 //site
 use App\Http\Controllers\HomeController;
 //use Illuminate\Support\Facades\Facade\Artisan;
@@ -167,6 +168,12 @@ Route::prefix('categoryques')->group(function () {
     Route::post('/update/{id}', [CategoryQuesController::class, 'update'])->name('categoryques.update');
     
 });   
+//Level
+Route::resource('level', LevelController::class, ['except' => ['update']]);
+Route::prefix('level')->group(function () {
+    Route::post('/update/{id}', [LevelController::class, 'update'])->name('level.update');
+    
+}); 
 
 
         // Route::prefix('design')->group(function () {

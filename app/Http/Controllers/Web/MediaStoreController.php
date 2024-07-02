@@ -62,7 +62,7 @@ class MediaStoreController extends Controller
   {
     $List = MediaPost::with('mediastore')->where('category_id', $id)->get();
     $List = $List->where('media_type', 'image');
-    return view('admin.design.section.menu.media.showcatgallery', ['List' => $List]);
+    return view('admin.catques.media.showcatgallery', ['List' => $List]);
     //   return  $List;
   }
   public function getpostgallery($id)
