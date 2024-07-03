@@ -23,6 +23,7 @@ use App\Models\LocationSetting;
 use App\Http\Requests\Setting\UpdateWhatsRequest;
 use App\Http\Requests\Setting\UpdateLocationRequest;
 use App\Http\Requests\Setting\UpdateContactEmailRequest;
+use App\Http\Requests\Setting\UpdateQuesRequest;
 
 class SettingController extends Controller
 {
@@ -68,22 +69,22 @@ class SettingController extends Controller
     $logo = ($logo == '' ? $strgCtrlr->DefaultPath('image') : $logo);
     $facerow = $List->where('dep', 'facebook')->first();
     $twitterrow = $List->where('dep', 'twitter')->first();
-   // $whats = $whatsrow->value1;
-  //  $locationrow = $List->where('dep', 'location')->first();
- //   $location = $locationrow->value1;
- //   $contact_emailrow = $List->where('dep', 'contact_email')->first();
- //   $contact_email = $contact_emailrow->value1;
+    // $whats = $whatsrow->value1;
+    //  $locationrow = $List->where('dep', 'location')->first();
+    //   $location = $locationrow->value1;
+    //   $contact_emailrow = $List->where('dep', 'contact_email')->first();
+    //   $contact_email = $contact_emailrow->value1;
     return view("admin.setting.basic", [
-      "titlerow" =>$titlerow,
-      "logorow" =>$logorow,
-      "iconrow" =>$iconrow,
+      "titlerow" => $titlerow,
+      "logorow" => $logorow,
+      "iconrow" => $iconrow,
       // "desc" => $desc,
       // "meta" => $meta,
       "favicon" => $favicon,
       "logo" => $logo,
-      "facerow" =>  $facerow,
+      "facerow" => $facerow,
       "twitterrow" => $twitterrow,
-     // "contact_email" => $contact_email,
+      // "contact_email" => $contact_email,
     ]);
   }
 
@@ -294,7 +295,7 @@ class SettingController extends Controller
 
 
   //header info
- 
+
   public function updatephone(UpdatePhoneRequest $request)
   {
     $formdata = $request->all();
@@ -407,16 +408,17 @@ class SettingController extends Controller
   public function destroy(string $id)
   {
     $item = Setting::find($id);
-    if (!( $item  === null)) {
-      if(($item->category=='header-info' && $item->dep=='header')
-      ||($item->category=='footer-info' && $item->dep=='footer')
-      ){     
-      Setting::find($id)->delete();
+    if (!($item === null)) {
+      if (
+        ($item->category == 'header-info' && $item->dep == 'header')
+        || ($item->category == 'footer-info' && $item->dep == 'footer')
+      ) {
+        Setting::find($id)->delete();
       }
       return redirect()->back()->with('success', 'تم الحذف بنجاح');
-    }else{
+    } else {
       return redirect()->back();
-       
+
     }
   }
 
@@ -444,214 +446,261 @@ class SettingController extends Controller
     return 1;
   }
 
-///////////////////////////////info
- 
-public function updateinfo(UpdateTitleRequest $request,$id)
-{
-  $formdata = $request->all();
-  $validator = Validator::make(
-    $formdata,
-    $request->rules(),
-    $request->messages()
-  );
-  if ($validator->fails()) {
-    return response()->json($validator);
-  } else {
-  //  $item = Setting::where('category', 'site-info')->where('dep', 'title')->first();
-    $item = Setting::find($id);
-    if($item->category=='site-info' && $item->dep=='title'){
-      Setting::find($id)->update([
-        'value1' => $formdata['name'],         
-      ]);
-    }else if($item->category=='site-info' && $item->dep=='icon'){
-      if ($request->hasFile('icon_input')) {
-        $file = $request->file('icon_input');
-        // $filename= $file->getClientOriginalName();                
-        $this->storeImage($file, $id, 'value1');
+  ///////////////////////////////info
+
+  public function updateinfo(UpdateTitleRequest $request, $id)
+  {
+    $formdata = $request->all();
+    $validator = Validator::make(
+      $formdata,
+      $request->rules(),
+      $request->messages()
+    );
+    if ($validator->fails()) {
+      return response()->json($validator);
+    } else {
+      //  $item = Setting::where('category', 'site-info')->where('dep', 'title')->first();
+      $item = Setting::find($id);
+      if ($item->category == 'site-info' && $item->dep == 'title') {
+        Setting::find($id)->update([
+          'value1' => $formdata['name'],
+        ]);
+      } else if ($item->category == 'site-info' && $item->dep == 'icon') {
+        if ($request->hasFile('icon_input')) {
+          $file = $request->file('icon_input');
+          // $filename= $file->getClientOriginalName();                
+          $this->storeImage($file, $id, 'value1');
+        }
+      } else if ($item->category == 'site-info' && $item->dep == 'logo') {
+        if ($request->hasFile('logo_input')) {
+          $file = $request->file('logo_input');
+          // $filename= $file->getClientOriginalName();                
+          $this->storeImage($file, $id, 'value1');
+        }
+      }
+      if ($item->category == 'site-info' && $item->dep == 'facebook') {
+
+        Setting::find($id)->update([
+          'value1' => $formdata['face'],
+        ]);
+        Setting::where('category', 'site-info')->where('dep', 'twitter')->first()->update([
+          'value1' => $formdata['twitter'],
+        ]);
+      }
+
+      return response()->json("ok");
+    }
+  }
+
+  public function getheadinfo()
+  {
+
+
+    $List = Setting::select(
+      'id',
+      'name1',
+      'value1',
+      'name2',
+      'value2',
+      'name3',
+      'value3',
+      'category',
+      'dep',
+      'sequence',
+      'section',
+      'location',
+      'is_active',
+    )->where('category', 'header-info')->where('dep', 'header')->get();
+    // $phonerow = $List->where('dep', 'phone')->first();
+
+    // $emailrow = $List->where('dep', 'email')->first();
+
+    return view("admin.setting.headerinfo", ['List' => $List]);
+  }
+
+  public function createhead()
+  {
+    return view("admin.setting.createheader");
+  }
+  public function storehead(StoreHeadRequest $request)
+  {
+    $formdata = $request->all();
+    $validator = Validator::make(
+      $formdata,
+      $request->rules(),
+      $request->messages()
+    );
+    if ($validator->fails()) {
+      return response()->json($validator);
+    } else {
+      $newObj = new Setting();
+      $newObj->name1 = $formdata['name'];
+      $newObj->value1 = $formdata['code'];
+      // $newObj->name2 = 'Code';
+      // $newObj->value2 = $formdata['code'];
+      // $newObj->name3 = 'Link';
+      // $newObj->value3 = $formdata['link'];
+      $newObj->category = 'header-info';
+      $newObj->dep = 'header';
+      $newObj->sequence = 0;
+      $newObj->section = '';
+      $newObj->location = '';
+      $newObj->is_active = 1;
+      $newObj->save();
+      return response()->json("ok");
+    }
+  }
+  public function updatehead(StoreHeadRequest $request, $id)
+  {
+    $formdata = $request->all();
+    $validator = Validator::make(
+      $formdata,
+      $request->rules(),
+      $request->messages()
+    );
+    if ($validator->fails()) {
+      return response()->json($validator);
+    } else {
+      $item = Setting::find($id);
+      if ($item->category == 'header-info' && $item->dep == 'header') {
+        Setting::find($id)->update([
+          'name1' => $formdata['name'],
+          'value1' => $formdata['code'],
+        ]);
+      }
+      return response()->json("ok");
+    }
+  }
+
+  public function footerinfo()
+  {
+
+
+    $List = Setting::select(
+      'id',
+      'name1',
+      'value1',
+      'name2',
+      'value2',
+      'name3',
+      'value3',
+      'category',
+      'dep',
+      'sequence',
+      'section',
+      'location',
+      'is_active',
+    )->where('category', 'footer-info')->where('dep', 'footer')->get();
+
+
+    return view("admin.setting.footer.edit", ['List' => $List]);
+  }
+  public function createfooter()
+  {
+    return view("admin.setting.footer.create");
+  }
+  public function storefooter(StoreHeadRequest $request)
+  {
+    $formdata = $request->all();
+    $validator = Validator::make(
+      $formdata,
+      $request->rules(),
+      $request->messages()
+    );
+    if ($validator->fails()) {
+      return response()->json($validator);
+    } else {
+      $newObj = new Setting();
+      $newObj->name1 = $formdata['name'];
+      $newObj->value1 = $formdata['code'];
+      // $newObj->name2 = 'Code';
+      // $newObj->value2 = $formdata['code'];
+      // $newObj->name3 = 'Link';
+      // $newObj->value3 = $formdata['link'];
+      $newObj->category = 'footer-info';
+      $newObj->dep = 'footer';
+      $newObj->sequence = 0;
+      $newObj->section = '';
+      $newObj->location = '';
+      $newObj->is_active = 1;
+      $newObj->save();
+      return response()->json("ok");
+    }
+
+  }
+
+  public function updatefooter(StoreHeadRequest $request, $id)
+  {
+
+    $formdata = $request->all();
+    $validator = Validator::make(
+      $formdata,
+      $request->rules(),
+      $request->messages()
+    );
+    if ($validator->fails()) {
+      return response()->json($validator);
+    } else {
+      $item = Setting::find($id);
+      if ($item->category == 'footer-info' && $item->dep == 'footer') {
+        Setting::find($id)->update([
+          'name1' => $formdata['name'],
+          'value1' => $formdata['code'],
+        ]);
+      }
+      return response()->json("ok");
+    }
+  }
+
+  public function delfooter(UpdateEmailRequest $request, $id)
+  {
+  }
+
+  //Question settting
+
+  public function quessetting()
+  {
+
+    $List = Setting::select(
+      'id',
+      'name1',
+      'value1',
+      'category',
+      'dep',
+      'is_active',
+    )->where('category', 'question')->get();
+
+    $minpoints = $List->where('dep', 'minpoints')->first();
+
+    $pointsrate = $List->where('dep', 'pointsrate')->first();
+    return view("admin.setting.ques", [
+      'minpoints' => $minpoints,
+      'pointsrate' => $pointsrate
+    ]);
+  }
+  public function quesupdate(UpdateQuesRequest $request, $id)
+  {
+    $formdata = $request->all();
+    $validator = Validator::make(
+      $formdata,
+      $request->rules(),
+      $request->messages()
+    );
+    if ($validator->fails()) {
+      return response()->json($validator);
+    } else {
+      $item = Setting::find($id);
+      if ($item->category == 'question' && $item->dep == 'minpoints') {
+        Setting::find($id)->update([
+          'value1' => $formdata['minpoints'],
+        ]);
+      } else if ($item->category == 'question' && $item->dep == 'pointsrate') {
+        Setting::find($id)->update([
+          'value1' => $formdata['pointsrate'],
+        ]);
       }
     }
-    else if($item->category=='site-info' && $item->dep=='logo'){
-      if ($request->hasFile('logo_input')) {
-        $file = $request->file('logo_input');
-        // $filename= $file->getClientOriginalName();                
-        $this->storeImage($file, $id, 'value1');
-      }
-    }
-    if($item->category=='site-info' && $item->dep=='facebook'){
-
-      Setting::find($id)->update([
-        'value1' => $formdata['face'],         
-      ]);
-      Setting::where('category','site-info')->where('dep','twitter')->first()->update([
-        'value1' => $formdata['twitter'],         
-      ]);
-    }
- 
-    return response()->json("ok");
-  }
-}
- 
-public function getheadinfo()
-{
-
-
-  $List = Setting::select(
-    'id',
-    'name1',
-    'value1',
-    'name2',
-    'value2',
-    'name3',
-    'value3',
-    'category',
-    'dep',
-    'sequence',
-    'section',
-    'location',
-    'is_active',
-  )->where('category', 'header-info')->where('dep', 'header')->get();
-  // $phonerow = $List->where('dep', 'phone')->first();
-
-  // $emailrow = $List->where('dep', 'email')->first();
-
-  return view("admin.setting.headerinfo", ['List'=> $List ]);
-}
-
-public function createhead()
-{
-  return view("admin.setting.createheader");
-}
-public function storehead(StoreHeadRequest $request)
-{
-  $formdata = $request->all();
-  $validator = Validator::make(
-    $formdata,
-    $request->rules(),
-    $request->messages()
-  );
-  if ($validator->fails()) {
-    return response()->json($validator);
-  } else {
-    $newObj = new Setting();
-    $newObj->name1 =$formdata['name'];
-    $newObj->value1 = $formdata['code'];
-    // $newObj->name2 = 'Code';
-    // $newObj->value2 = $formdata['code'];
-    // $newObj->name3 = 'Link';
-    // $newObj->value3 = $formdata['link'];
-    $newObj->category = 'header-info';
-    $newObj->dep = 'header';
-    $newObj->sequence = 0;
-    $newObj->section = '';
-    $newObj->location = '';
-    $newObj->is_active = 1;
-    $newObj->save();
-    return response()->json("ok");
-  }
-}
-public function updatehead(StoreHeadRequest $request,$id)
-{
-  $formdata = $request->all();
-  $validator = Validator::make(
-    $formdata,
-    $request->rules(),
-    $request->messages()
-  );
-  if ($validator->fails()) {
-    return response()->json($validator);
-  } else {
-    $item = Setting::find($id);
-    if($item->category=='header-info' && $item->dep=='header'){
-      Setting::find($id)->update([
-        'name1' => $formdata['name'], 
-        'value1' => $formdata['code'],         
-      ]);
-    }
-    return response()->json("ok");
-  }
-}
- 
-public function footerinfo()
-{
-  
-
-  $List = Setting::select(
-    'id',
-    'name1',
-    'value1',
-    'name2',
-    'value2',
-    'name3',
-    'value3',
-    'category',
-    'dep',
-    'sequence',
-    'section',
-    'location',
-    'is_active',
-  )->where('category', 'footer-info')->where('dep', 'footer')->get();
- 
-
-  return view("admin.setting.footer.edit", ['List'=> $List ]);
-}
-public function createfooter()
-{
-  return view("admin.setting.footer.create");
-}
-public function storefooter(StoreHeadRequest $request)
-{
-  $formdata = $request->all();
-  $validator = Validator::make(
-    $formdata,
-    $request->rules(),
-    $request->messages()
-  );
-  if ($validator->fails()) {
-    return response()->json($validator);
-  } else {
-    $newObj = new Setting();
-    $newObj->name1 =$formdata['name'];
-    $newObj->value1 = $formdata['code'];
-    // $newObj->name2 = 'Code';
-    // $newObj->value2 = $formdata['code'];
-    // $newObj->name3 = 'Link';
-    // $newObj->value3 = $formdata['link'];
-    $newObj->category = 'footer-info';
-    $newObj->dep = 'footer';
-    $newObj->sequence = 0;
-    $newObj->section = '';
-    $newObj->location = '';
-    $newObj->is_active = 1;
-    $newObj->save();
     return response()->json("ok");
   }
 
-}
- 
-public function updatefooter( StoreHeadRequest $request,$id)
-{
- 
- $formdata = $request->all();
-  $validator = Validator::make(
-    $formdata,
-    $request->rules(),
-    $request->messages()
-  );
-  if ($validator->fails()) {
-    return response()->json($validator);
-  } else {
-    $item = Setting::find($id);
-    if($item->category=='footer-info' && $item->dep=='footer'){
-      Setting::find($id)->update([
-        'name1' => $formdata['name'], 
-        'value1' => $formdata['code'],         
-      ]);
-    }
-    return response()->json("ok");
-  }
-}
-
-public function delfooter(UpdateEmailRequest $request,$id)
-{
-}
 }

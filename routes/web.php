@@ -1,5 +1,6 @@
 <?php
  
+use App\Http\Controllers\Web\QuestionController;
 use Illuminate\Support\Facades\Route;
  
 use App\Http\Controllers\AdminController;
@@ -21,6 +22,8 @@ use  App\Http\Controllers\Web\SocialController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Web\CategoryQuesController;
 use App\Http\Controllers\Web\LevelController;
+ 
+
 //site
 use App\Http\Controllers\HomeController;
 //use Illuminate\Support\Facades\Facade\Artisan;
@@ -159,7 +162,10 @@ Route::middleware(['auth:web', 'verified'])->prefix('admin')->group(function () 
             Route::post('/storefooter', [SettingController::class, 'storefooter']);         
          Route::post('/updatefooter/{id}', [SettingController::class, 'updatefooter']);
             Route::delete('/delfooter/{id}', [SettingController::class, 'delfooter']);
-
+            //question
+            //
+            Route::get('/question', [SettingController::class, 'quessetting']);
+            Route::post('/question/{id}', [SettingController::class, 'quesupdate']);
         });
 //questions
 //category
@@ -172,6 +178,12 @@ Route::prefix('categoryques')->group(function () {
 Route::resource('level', LevelController::class, ['except' => ['update']]);
 Route::prefix('level')->group(function () {
     Route::post('/update/{id}', [LevelController::class, 'update'])->name('level.update');
+    
+});
+//questions route
+Route::resource('question', QuestionController::class, ['except' => ['update']]);
+Route::prefix('question')->group(function () {
+    Route::post('/update/{id}', [QuestionController::class, 'update'])->name('question.update');
     
 }); 
 

@@ -22,6 +22,8 @@ $(document).ready(function () {
 // });
 	function ClearErrors() {
 		$("#" + "info-form-error").html('');
+		$("." + "error").html('').hide();
+		$('.parsley-error').removeClass('parsley-error');
 	 
 	}
   
@@ -54,7 +56,7 @@ $(document).ready(function () {
 					
 					//noteSuccess();	
 					//alert('ok');
-					swal( "تم الحفظ بنجاح");
+					noteSuccess();
 					// if(formid=='#social-form'){
 					
 					// }else{
@@ -69,11 +71,13 @@ $(document).ready(function () {
 			//	endLoading();
 				var response = $.parseJSON(errorresult.responseText);
 				// $('#errormsg').html( errorresult );
-				swal( "لم يتم الحفظ");
+				noteError();
 				$.each(response.errors, function (key, val) {
 				 
 					$("#" + "info-form-error").append('<li class="text-danger">'+val[0]+'</li>');
-				  
+				 
+					$("#" + key + "-error").text(val[0]).show();
+					$("#" + key).addClass('parsley-error');
 				});
 
 			}, finally: function () {
@@ -114,18 +118,10 @@ $(document).ready(function () {
 ///////////////////////////////////////////////////////
 
 function noteSuccess() {
-	// notif({
-	// 	msg: "تمت العملية بنجاح",
-	// 	type: "success"
-	// });
+	swal("تم الحفظ بنجاح");
 }
 function noteError() {
-	// notif({
-	// 	msg: "لم تنجح العملية !",
-	// 	position: "right",
-	// 	type: "error",
-	// 	bottom: '10'
-	// });
+	swal("لم يتم الحفظ");
 }
  
  

@@ -97,3 +97,7 @@ border: #ee335e  solid 1px !important;
 .modal-content {
     z-index: 1050;
 }
+.ans-col{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

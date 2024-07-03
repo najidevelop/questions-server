@@ -17,6 +17,8 @@ class Answer extends Model
         'updateuser_id',
         'type',
         'file',
+        'question_id',
+        'sequence',
 
     ];
     public function answersclients(): HasMany
@@ -30,6 +32,10 @@ class Answer extends Model
     public function updateuser(): BelongsTo
     {
         return $this->belongsTo(User::class,'updateuser_id')->withDefault();
+    }
+    public function question(): BelongsTo
+    {
+        return $this->belongsTo(Question::class)->withDefault();
     }
 
 }

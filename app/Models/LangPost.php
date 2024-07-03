@@ -14,6 +14,7 @@ class LangPost extends Model
         'lang_id',
         'category_id',
         'post_id',
+        'level_id',
         'main_table',
         'title_trans',
         'content_trans',

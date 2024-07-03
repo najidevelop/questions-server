@@ -7,16 +7,12 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.2024_06_24_16094 add_question_id_to_answers_table;add_level_id_to_lang_posts_table;
-     * 
+     * Run the migrations.
      */
     public function up(): void
     {
-        Schema::table('clients', function (Blueprint $table) {
-           
-            $table->foreignId('lang_id')->nullable();
- 
-
+        Schema::table('lang_posts', function (Blueprint $table) {
+            $table->foreignId('level_id')->nullable();
         });
     }
 
@@ -25,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('clients', function (Blueprint $table) {
+        Schema::table('lang_posts', function (Blueprint $table) {
             //
         });
     }

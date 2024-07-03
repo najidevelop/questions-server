@@ -73,11 +73,10 @@ class LevelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit( $id)
+    public function edit($id)
     {
-        $item = Level::find($id);
+        $item = Level::find($id); 
  
-        //
         return view("admin.level.edit", ["item" => $item]);
     }
 

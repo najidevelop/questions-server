@@ -79,7 +79,21 @@
                                     </div>
                                 </td>
                             </tr>
-
+                            <tr>
+                                <th scope="row">4</th>
+                                <td> اعدادات الاسئلة</td>
+                                
+                                
+                                <td style="width: 50px">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <a href="{{url('admin/setting/question')}}"><i
+                                                    class="fa-solid fa-pen-to-square"></i></a>
+                                        </div>
+                                        
+                                    </div>
+                                </td>
+                            </tr>
                     </tbody>
                 </table>
             </div>
