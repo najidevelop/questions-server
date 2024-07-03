@@ -343,6 +343,6 @@ Route::middleware('auth')->group(function () {
        
 //     });
 // });
-// Route::get('/page/{slug}', [HomeController::class, 'showpage']);
+ Route::get('/page/{slug}', [HomeController::class, 'showpage']);
 // Route::post('/sendmail', [MailController::class, 'store']);
 require __DIR__ . '/auth.php';
