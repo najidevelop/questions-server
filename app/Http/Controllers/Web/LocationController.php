@@ -292,11 +292,17 @@ class LocationController extends Controller
   //saraha
   public function pagesnotsorted($loc)
   {
+    $code="";
+    if($loc=="cats"){
+$code="ques";
+    }else{
+      $code="page";
+    }
     $ComboList = Category::whereDoesntHave('locationsettings', function ($query) use ($loc) {
       $query->wherehas('location', function ($query) use ($loc) {
         $query->where('name', $loc);
       });
-    })->where('code', 'page')->get();
+    })->where('code', $code)->get();
     // return  $ComboList;  
 
     return $ComboList;
@@ -318,11 +324,17 @@ class LocationController extends Controller
   }
   public function sortpages($loc)
   {
+    $code="";
+    if($loc=="cats"){
+$code="ques";
+    }else{
+      $code="page";
+    }
     $List = LocationSetting::wherehas('location', function ($query) use ($loc) {
       $query->where('name', $loc);
     })->
-      wherehas('category', function ($query) {
-        $query->where('code', 'page');
+      wherehas('category', function ($query)use($code) {
+        $query->where('code', $code);
       })->with('location', 'category')->get();
 
     

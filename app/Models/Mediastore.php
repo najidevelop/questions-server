@@ -31,10 +31,7 @@ class Mediastore extends Model
             }else if($this->name==''){
                 $conv =''; 
             } else {
-                if($this->local_path=='projects'){
-                    $url = $strgCtrlr->ProjectPath($this->type);
-                    $conv =  $url.$this->name;
-                } else if($this->local_path=='categories'){
+                if($this->local_path=='categories'){
                     $url = $strgCtrlr->CategoryPath($this->type);
                     $conv =  $url.$this->name;
                 }else if($this->local_path=='posts'){
@@ -42,33 +39,11 @@ class Mediastore extends Model
                     $conv =  $url.$this->name;
                 }
            
-            }   
-
-        // }else{
-        //     //video
-        //     if(is_null($this->name) ){
-        //         $conv =''; 
-        //     }else {
-        //         if($this->local_path=='projects'){
-        //             $url = $strgCtrlr->ProjectPath($this->type);
-        //             $conv =  $url.$this->name;
-        //         } else if($this->local_path=='categories'){
-        //             $url = $strgCtrlr->CategoryPath($this->type);
-        //             $conv =  $url.$this->name;
-        //         }else if($this->local_path=='posts'){
-        //             $url = $strgCtrlr->PostPath($this->type);
-        //             $conv =  $url.$this->name;
-        //         }
-            
-        //     }
-        // }
+            }      
        
             return  $conv;
      }
-    // public function mediaprojects(): HasMany
-    // {
-    //     return $this->hasMany(MediaProject::class,'media_id');
-    // }
+   
      
     public function mediaposts(): HasMany
     {

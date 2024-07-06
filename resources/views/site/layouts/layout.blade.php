@@ -3,8 +3,8 @@
   @php
       $sitedataCtrlr=new App\Http\Controllers\Web\SiteDataController();  
      $mainarr=$sitedataCtrlr->FillStaticData();
-     $mainmenuarr=$sitedataCtrlr->getmenubyloc('main-menu');
-     $footermenuarr=$sitedataCtrlr->getmenubyloc('footer-menu');
+    // $mainmenuarr=$sitedataCtrlr->getmenubyloc('main-menu');
+     //$footermenuarr=$sitedataCtrlr->getmenubyloc('footer-menu');
      
   // if(isset($lang)){
   //   $transarr=$sitedataCtrlr->FillTransData( $lang);

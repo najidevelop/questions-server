@@ -1,60 +1,36 @@
-<div class="visit_and_sites text-center d-flex flex-wrap justify-content-center" style="color:#272727;margin-bottom: -2rem;">
- 
-</div>
-<footer>
-<div class="container ff">
-  <ul class="ul">
-    @foreach ($footermenuarr as $footeritem)
-    <a href="{{ $footeritem['urlpath'] }}">
-      <li>{{Str::of( $footeritem['tr_title'])->toHtmlString()}}</li>
-  </a>
-    
-    @endforeach
-   
- 
-      <a href="https://www.gmraya.com/page/about-us">
-        <li>إنضم للمجموعة</li>
-    </a>
-       
-    <a href="https://www.gmraya.com/page/about-us">
-      <li>  تابعنا على Facebook</li>
-  </a>
-     
-
- 
- 
-
- 
-  </ul>
-  <div class="text-descr">
-      <p> </p>
+  <!-- قائمة سفلية -->
+  <div class="fixed-bottom">
+    <div class="bottom-nav-container bg-style">
+      <nav class="navbar navbar-light">
+        <ul class="navbar-nav d-flex flex-row justify-content-between w-100">
+          <li class="nav-item text-center flex-fill">
+            <a class="nav-link nav-link-pad" href="#"><i class="fas fa-home icon-style"></i><br>الرئيسية</a>
+          </li>
+          <li class="nav-item text-center flex-fill">
+            <a class="nav-link nav-link-pad" href="#"><i class="fas fa-cog icon-style"></i><br>احصائيات</a>
+          </li>
+          <li class="nav-item text-center flex-fill">
+            <a class="nav-link nav-link-pad" href="{{ url($lang,'categories') }}"><i class="fas fa-th-list icon-style"></i><br>التصنيفات</a>
+          </li>
+          @if (Auth::guard('client')->check())
+          <li class="nav-item text-center flex-fill">
+            <a class="nav-link nav-link-pad" href="{{ route('client.account')  }}"><i class="fas fa-user icon-style"></i><br>الحساب</a>
+          </li>
+          @endif
+        </ul>
+      </nav>
+    </div>
   </div>
-</div>
-<!--<div class="container text-start text-white" style="font-size:12px;">designed by: <a href="mailto:khaledamiramin@gmail.com" style="color:#F2AF2F;">Khaled Amir Amin</a></div>-->
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
-</script>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="{{url("assets/site/ckeditor/ckeditor.js")}}"></script>
-@if (session('success'))
-<script>
-  swal("{{ session('success') }}");
-</script>
-@endif
-@if(session('pass'))
-<script>
-  swal("تمت العملية بنجاح", "بامكانك الدخول الى حسابك", "success");
-</script>
-@endif
-@yield('script')
-@yield('js')
-@foreach ( $mainarr['footerlist'] as $headrow )
-{{ Str::of($headrow['value1'])->toHtmlString()}}    
-@endforeach
-</body> 
+  
+  <!-- Bootstrap core JavaScript و JQuery-->
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="{{ url('assets/site/js/main.js') }}"></script>
+  
+  @yield('js')
+   
+  </body>
+  </html>
+  

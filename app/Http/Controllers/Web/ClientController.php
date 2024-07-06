@@ -158,48 +158,48 @@ return view("site.client.edit", ["client" => $client,"socials" => $this->getsoci
        
     }
 
-    public function send_message($slug)
-    {
-      //  if(Auth::guard('client')->check()){
-        if($slug=='account'){
-      // return redirect()->route('client.account');
-    //   return($slug);
-      return $this->edit();
-        }else if($slug=='login'){
-     return $this->showlogin();
-        }else if($slug=='register'){
-          return $this->create();
+//     public function send_message($slug)
+//     {
+//       //  if(Auth::guard('client')->check()){
+//         if($slug=='account'){
+//       // return redirect()->route('client.account');
+//     //   return($slug);
+//       return $this->edit();
+//         }else if($slug=='login'){
+//      return $this->showlogin();
+//         }else if($slug=='register'){
+//           return $this->create();
           
-          // return redirect()->route('register.client');
-        }else if($slug=='messages'){
-        $msgctrlr=new   MessageController();
+//           // return redirect()->route('register.client');
+//         }else if($slug=='messages'){
+//         $msgctrlr=new   MessageController();
 
-          return  $msgctrlr->index();
+//           return  $msgctrlr->index();
           
-          // return redirect()->route('register.client');
-        }else{
-          $client=Client::where('user_name',$slug)->first();
-          if($client){
-            $client_url=$this->getclient_url($client->user_name);
-            return view("site.client.sendmessage", ["client" => $client,"client_url" =>$client_url]);
+//           // return redirect()->route('register.client');
+//         }else{
+//           $client=Client::where('user_name',$slug)->first();
+//           if($client){
+//             $client_url=$this->getclient_url($client->user_name);
+//             return view("site.client.sendmessage", ["client" => $client,"client_url" =>$client_url]);
            
-        }
+//         }
  
- // return redirect()->route('site.home');
-}
-//$client->birthdateStr= (string)Carbon::create($client->birthdate)->format('Y-m-d');
- //return response()->json($this->getsocial($id));
+//  // return redirect()->route('site.home');
+// }
+// //$client->birthdateStr= (string)Carbon::create($client->birthdate)->format('Y-m-d');
+//  //return response()->json($this->getsocial($id));
  
 
  
 
    
-        // }else{
-        //   //not login 
-        //        return redirect()->back();
-        //      }
+//         // }else{
+//         //   //not login 
+//         //        return redirect()->back();
+//         //      }
        
-    }
+//     }
     public function getclient_url($slug)
     {
     
@@ -380,7 +380,7 @@ $res = ClientSocial::updateOrCreate(
         Storage::delete("public/" .$path. '/' . $oldimagename);        
         //delete   MediaPost records
         ClientSocial::where('client_id',$id)->delete();
-        MessageModel::where('sender_id',$id)->orWhere('recipient_id',$id)->delete();
+       // MessageModel::where('sender_id',$id)->orWhere('recipient_id',$id)->delete();
         Client::find($id)->delete();
         Auth::guard('client')->logout();
         return redirect()->route('site.home');

@@ -930,6 +930,79 @@ $is_link=1;
 
         return $List;
     }
+
+    //question
+    public function getquescatbyloc($loc,$lang_id)
+    {
+        $Dblist= LocationSetting::wherehas('location', function ($query) use($loc) {
+            $query->where('name',$loc);
+          })->where(function ($query) {
+            $query->wherehas('category', function ($query)  {
+            $query->where('status',1);
+          });
+        })
+        //   ->
+        //   wherehas('post', function ($query)  {
+        //     $query->where('status',1);
+        //   })
+        
+        //   ->
+        //   wherehas('category', function ($query)  {
+        //     $query->where('status',1);
+        //   })
+        
+          ->with(['location',
+            'category.langposts' => function ($q)use ($lang_id) {
+               $q->where('lang_id', $lang_id) ;
+           }
+           , 'category.mediaposts' => function ($q) {
+            $q->with('mediastore');
+        }
+        ])->  orderBy('sequence')->get();      
+        $List = $Dblist->map(function ($locPost) {
+//if($locPost->post && $locPost->post->langposts->first()){
+    $tr_title='';
+  //  $tr_content ='';
+    $slug ='';
+   
+    $code='';
+  // if($locPost->category_id>0){
+  if($locPost->category->langposts->first()){
+    $tr_title=$locPost->category->langposts->first()->title_trans;
+  }
+  $image_path="";
+  if($locPost->category->mediaposts->first()){
+    $image_path=$locPost->category->mediaposts->first()->mediastore->image_path;
+  }
+       
+        $slug=$locPost->category->slug;
+        $code=$locPost->category->code;
+
+        $urlpath=url('page', $slug);
+      //  $tr_content =$locPost->category->langposts->first()->content_trans;
+
+   // }
+ 
+    return [
+        'id' => $locPost->id,
+        'category_id' => $locPost->category_id,        
+        'loc_name' => $locPost->location->name,
+        'tr_title' => $tr_title,
+       // 'tr_content' => $locPost->post->langposts->first()->content_trans,                 
+        'sequence' => $locPost->sequence, 
+    
+        'slug' => $slug,
+        'code'=> $code,
+        'urlpath'=> $urlpath,
+        'image_path'=>$image_path
+    ];
+ 
+        
+        });
+
+        return $List;
+    }
+
     /**
      * Show the form for creating a new resource.
      */

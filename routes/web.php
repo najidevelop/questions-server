@@ -172,6 +172,8 @@ Route::middleware(['auth:web', 'verified'])->prefix('admin')->group(function () 
 Route::resource('categoryques', CategoryQuesController::class, ['except' => ['update']]);
 Route::prefix('categoryques')->group(function () {
     Route::post('/update/{id}', [CategoryQuesController::class, 'update'])->name('categoryques.update');
+    Route::get('/sort/{loc}', [LocationController::class, 'sortpage']);
+   
     
 });   
 //Level
@@ -345,4 +347,22 @@ Route::middleware('auth')->group(function () {
 // });
  Route::get('/page/{slug}', [HomeController::class, 'showpage']);
 // Route::post('/sendmail', [MailController::class, 'store']);
+
+//question client
+
+//site
+Route::get('{lang}/categories', [HomeController::class, 'getcategories']);
+Route::prefix('u')->group(function () {
+    //Route::get('/{slug}', [ClientController::class, 'send_message']);
+    Route::middleware('guest:client')->group(function () {
+        Route::get('/register', [ClientController::class, 'create'])->name('register.client');
+        Route::post('/register', [ClientController::class, 'store']);
+    
+        Route::get('/login', [ClientController::class, 'showlogin'])->name('login.client');
+        Route::post('/login', [ClientController::class, 'login']);
+    
+       // 
+
+    });
+});
 require __DIR__ . '/auth.php';
