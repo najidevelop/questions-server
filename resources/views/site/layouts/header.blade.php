@@ -16,7 +16,7 @@
 
                 <a  class="nav-link dropdown-toggle nav-link-pad" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">اهلا بك يا {{ Auth::guard('client')->user()->name }}</a>
                 <div class="dropdown-menu" aria-labelledby="accountDropdown">
-                    <a class="dropdown-item" href="{{ route('client.account')  }}">حسابي</a>
+                    <a class="dropdown-item" href="{{ route('client.account',$lang)  }}">حسابي</a>
 
                     <form method="POST" action="{{ route('logout.client') }}"  >
                         @csrf
@@ -30,10 +30,10 @@
               </li>
             @else
             <li class="nav-item  ">
-                <a class="nav-link  nav-link-pad" href="{{ url('/u/register') }}">حساب جديد</a>
+                <a class="nav-link  nav-link-pad" href="{{ url($lang,'register') }}">حساب جديد</a>
             </li>
                <li class="nav-item  ">
-                <a class="nav-link  nav-link-pad" href="{{ route('login.client') }}">تسجيل دخول</a>
+                <a class="nav-link  nav-link-pad" href="{{ route('login.client',$lang) }}">تسجيل دخول</a>
               </li>
             @endif
          
@@ -46,8 +46,12 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="languageDropdown">
                 @foreach ( $transarr['langs']->skip(1) as $langrow )
-                <a class="dropdown-item" href="{{route(\Illuminate\Support\Facades\Route::currentRouteName(),['lang' => $langrow->code])}}"><img  width="25" height="20" src="{{$langrow->image_path}}"><span class="lang-menu-name">{{ $langrow->name }}</span></a>
-               
+                @if (isset($catquis)) 
+                <a class="dropdown-item" href="{{route(\Illuminate\Support\Facades\Route::currentRouteName(),['lang' => $langrow->code,'slug'=>$catquis['slug']])}}">
+                    @else
+                  <a class="dropdown-item" href="{{route(\Illuminate\Support\Facades\Route::currentRouteName(),['lang' => $langrow->code])}}">                    
+                @endif
+                <img  width="25" height="20" src="{{$langrow->image_path}}"><span class="lang-menu-name">{{ $langrow->name }}</span></a>
                 @endforeach
               </div>
             </li>

@@ -41,39 +41,37 @@ class ClientController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($lang)
     {
-        return view('site.client.register');
+      $sitedctrlr=new SiteDataController(); 
+      $transarr=$sitedctrlr->FillTransData($lang);
+      $defultlang=$transarr['langs']->first();
+        return view('site.client.register',['transarr'=>$transarr,'lang'=>$lang,'defultlang'=>$defultlang ]);
     }
-    public function showlogin()
+    public function showlogin($lang)
     {
-        return view('site.client.login');
+      $sitedctrlr=new SiteDataController(); 
+      $transarr=$sitedctrlr->FillTransData($lang);
+      $defultlang=$transarr['langs']->first();
+        return view('site.client.login',['transarr'=>$transarr,'lang'=>$lang,'defultlang'=>$defultlang ]);
     }
 
     
-    public function login(LoginClientRequest $request): RedirectResponse
+    public function login(LoginClientRequest $request)//: RedirectResponse
     {
         $request->authenticate();
-        /*
-        $path = 'images/users';
-        $url =url( Storage::url($path)).'/'.Auth::user()->image;
-        session(['fullpathimg' =>  $url ]);
-        */
+     
         $request->session()->regenerate();
 //new code
- return redirect()->intended(Route('mymessages',false));
-//   if(Auth::guard('client')){
+ //return redirect()->intended(Route('mymessages',false));
+ return response()->json("ok");
  
-// }else{
-//     return redirect('/');
-// }
-
-       // return redirect()->intended(Route('mymessages',false));
+      
     }
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreClientRequest $request)//StoreClientRequest
+    public function store(StoreClientRequest $request,$lang)//StoreClientRequest
     {
    
       $formdata = $request->all();
@@ -87,18 +85,22 @@ class ClientController extends Controller
   
       if ($validator->fails()) {
  
-                             
+        return response()->json($validator);               
     //return redirect()->with('errors',$validator)->json();
     //   return response()->json($validator);
-       return redirect()
-       ->back()
-       ->withErrors($validator)
-       ->withInput();
+      //  return redirect()
+      //  ->back()
+      //  ->withErrors($validator)
+      //  ->withInput();
   
       } else {
-
+ 
+    //  $lang= $formdata["lang"];
+    $sitedctrlr=new  SiteDataController();
+    $transarr=$sitedctrlr->FillTransData($lang);
+    $defultlang=$transarr['langs']->first(); 
         $newObj = new Client;
-     $slug=   Str::slug($formdata['name']);
+   //  $slug=   Str::slug($formdata['name']);
         $newObj->name = $formdata['name'];
         // $newObj->first_name = $formdata['first_name'];
         // $newObj->last_name = $formdata['last_name'];
@@ -107,8 +109,9 @@ class ClientController extends Controller
        // $newObj->mobile = $formdata['mobile'];
         // $newObj->role = 'admin';
         //   $newObj->is_active = $formdata['is_active'];
-        $newObj->user_name=$slug;
+       // $newObj->user_name=$slug;
         $newObj->is_active = 1;
+        $newObj->lang_id= $defultlang->id;
         $newObj->save();
   
         if ($request->hasFile('image')) {
@@ -118,15 +121,12 @@ class ClientController extends Controller
   
           $this->storeImage($file, $newObj->id);
           //  $this->storeImage( $file,2);
-        }
-        
-    
+        }   
         event(new Registered($newObj));
-
         Auth::guard('client')->login($newObj);
         // make login after register
-        return redirect()->route('mymessages');
-       // return response()->json("ok");
+      //  return redirect()->route('site.home');
+        return response()->json("ok");
       }
     }
     /**

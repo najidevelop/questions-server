@@ -21,7 +21,8 @@ class Authenticate extends Middleware
         if (!$request->expectsJson()) {
 
             if (in_array('auth:client', $request->route()->middleware())) {
-               return route('login.client');
+             $lang=   $request->route('lang');
+               return route('login.client', $lang);
              
             } else if (in_array('guest:client', $request->route()->middleware())) {
                 return route('site.home');

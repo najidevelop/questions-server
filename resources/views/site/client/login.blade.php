@@ -1,70 +1,56 @@
 @extends('site.layouts.layout')
 
 @section('content')
-    <section class="section">
-        <div class="container">
-            <div class="box-main-foo">
-                <div class="sign-in">
-                    <div class="part-above">
-
-
-                        <h4>مرحبا بك مجددا</h4>
-
-
-                        @if ($errors->any())
-                        <ul>                  
-                          @foreach ($errors->all() as $error)
-                          <li class="text-danger">{{ $error }}</li>
-                          @endforeach                     
-                      </ul>
-                      @endif
-                        <form method="POST" action="{{ url('u/login') }}" class="fomr-sign" id="login-form">
-                            @csrf
-                              <div class="col mb-4">
-                                <label class="mb-2" for="typeEmailX-2">ايميل</label>
-                                <input type="email" value="" id="typeEmailX-2 " name="email"
-                                    class="form-control ">
-
-                            </div>
-
-                            <div class="col mb-4">
-                                <label class="mb-2" for="typePasswordX-2">كلمة السر</label>
-                                <input type="password" name="password" id="typePasswordX-2" class="form-control  ">
-
-                            </div>
-
-                            <!-- Checkbox -->
-
-
-                            <button class="theme-btn primary-btn btn-sign w-100 mt-4" type="submit">سجل</button>
-
+   	    <!-- محتوى الصفحة -->
+           <div class="container-fluid content">
+            <div class="row justify-content-center">
+              <main role="main" class="col-12 col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                  <h1 class="h2">تسجيل الدخول</h1>
+                </div>
+                
+                    <!-- محتوى الصفحة -->
+                <div class="row main-content justify-content-center ">
+                  <div class="col-md-6">
+                    <div class="card login-card">
+                      <div class="card-body  bg-style">
+                        <h3 class="card-title text-center">تسجيل الدخول</h3>
+                        <form   action ="{{ url($lang,'login') }}" method="POST"  name="login-form"   id="login-form"
+                        enctype="multipart/form-data">
+                        @csrf
+                          <div class="form-group">
+                            <label for="email">البريد الالكتروني</label>
+                            <input type="text" class="form-control" id="email"  name="email"  placeholder="ادخل البريد الالكتروني ">
+                            <div  id="email-error" class="invalid-feedback">هذا الحقل مطلوب</div>
+                          </div>
+                          <div class="form-group">
+                            <label for="password">كلمة المرور</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="ادخل كلمة المرور">
+                            <div  id="password-error" class="invalid-feedback">كلمة المرور مطلوبة.</div>
+                          </div>
+                          <button type="submit" class="btn btn-primary btn-block btn-submit">دخول</button>
                         </form>
-
                         <div class="sec">
-                            <p>
-                                هل نسيت كلمة المرور؟
-                                <a href="#">استعادة كلمة المرور </a>
-                            </p>
-                            <p>
-                                ليس لديك حساب؟
-                                <a href="{{ url('/u/register') }}">سجل الأن</a>
-                            </p>
-                            <a href="{{ route('socialite.auth') }}" class="btn btn-blue-outline login-div">
-                                <span   class="fa fa-facebook"  style="color:#F2AF2F; font-size:20px;"></span>&nbsp; الدخول عن طريق الفيسبوك
-                                </a>
-
-    
-
-
-                        </div>
+                                    <p>
+                                        هل نسيت كلمة المرور؟
+                                        <a href="#">استعادة كلمة المرور </a>
+                                    </p>
+                                    <p>
+                                        ليس لديك حساب؟
+                                        <a href="{{ url($lang,'register') }}">سجل الأن</a>
+                                    </p>
+                                    </div>
+                      </div>
                     </div>
-
+                  </div>
                 </div>
-                <div class="left-form-login">
-                    <img src="{{asset('/assets/site/assets/images/login.svg')}}"  alt="">
-                </div>
+                 
+              </main>
             </div>
-        </div>
-
-    </section>
+          </div>
+@endsection
+@section('js')
+<script src="{{ url('assets/site/js/sweetalert.min.js') }}"></script>
+<script src="{{ url('assets/site/js/validate.js') }}"></script>
+<script src="{{ url('assets/site/js/login.js') }}"></script>
 @endsection

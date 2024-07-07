@@ -26,6 +26,11 @@ body {
   max-height: 158px;
   transition: transform 0.3s ease;
 }
+.category-card-full img { 
+  height: auto;
+  max-height:none;
+  
+}
 
 .category-card:hover img {
   transform: scale(1.3); /* تكبير الصورة بنسبة 30% */

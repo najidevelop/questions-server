@@ -28,6 +28,12 @@ class HomeController extends Controller
      */
     public function index(Request $request, $lang=null)
     {
+
+      // if($lang=='admin'){
+      //    return redirect()->route('admin');  
+      // }else if($lang=='login'){
+      //    return redirect()->route('login');  
+      // }
       $formdata=$request->all();
      
       $sitedctrlr=new SiteDataController();
@@ -36,6 +42,7 @@ class HomeController extends Controller
   //  $transarr['langs']->select('code')->get();
  //   return  $sitedctrlr->getlangscod()  ;
     //
+
    if(isset($formdata['lang']))
    {
       $lang=$formdata['lang'];
@@ -46,14 +53,15 @@ class HomeController extends Controller
     $transarr=$sitedctrlr->FillTransData($lang);
     $defultlang=$transarr['langs']->first();
    // $homearr= $sitedctrlr->gethomedata( $defultlang->id);
-
-      return view('site.home',['lang'=>$lang, 'transarr'=>$transarr,'defultlang'=>$defultlang, 'active_item'=>$active]);
+   $catlist= $sitedctrlr-> getquescatbyloc('cats',$defultlang->id);
+      return view('site.home',['lang'=>$lang, 'transarr'=>$transarr,'defultlang'=>$defultlang, 'active_item'=>$active,'categories'=>$catlist]);
      }else{
       $transarr=$sitedctrlr->FillTransData();
       $defultlang=$transarr['langs']->first();
       $lang=  $defultlang->code;
+      $catlist= $sitedctrlr-> getquescatbyloc('cats',$defultlang->id);
       //$homearr= $sitedctrlr->gethomedata( $defultlang->id);
-      return view('site.home',['transarr'=>$transarr,'lang'=>$lang, 'defultlang'=>$defultlang,'active_item'=>$active]);
+      return view('site.home',['transarr'=>$transarr,'lang'=>$lang, 'defultlang'=>$defultlang,'active_item'=>$active,'categories'=>$catlist]);
      }
       
     }
@@ -140,6 +148,27 @@ else{
 // $more=$more_post['tr_title'];
 //    }
    return view('site.content.categories',['categories'=>$catlist,'transarr'=>$transarr,'lang'=>$lang,'defultlang'=>$defultlang ]);   
+    }
+    public function getcategory($lang,$slug)
+    {
+     //  $formdata=$request->all();
+     $sitedctrlr=new SiteDataController();   
+
+    // $langitem = Language::where('status',1)->where('code', $lang)->first();
+     $transarr=$sitedctrlr->FillTransData($lang);
+     $defultlang=$transarr['langs']->first();
+   //  $current_path=$sitedctrlr->getpath($lang,"categories"); 
+  
+     $cat= $sitedctrlr->getcategory($slug,$defultlang->id);
+  // $cat= $sitedctrlr->getcatwithposts( $langitem->id,$slug);
+   //$translateArr=   $sitedctrlr->gettranscat( $defultlang->id);
+ 
+   //$more_post=$translateArr['posts']->where('code','more')->first();
+   
+//    if($more_post){
+// $more=$more_post['tr_title'];
+//    }
+   return view('site.content.category',['catquis'=>$cat,'transarr'=>$transarr,'lang'=>$lang,'defultlang'=>$defultlang ]);   
     }
     public function showpage(string $slug)
     {

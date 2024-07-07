@@ -27,7 +27,7 @@ protected $alphaAtexpr='/^[\pL\s\_\-\@\.\0-9]+$/u';
        return[
          // 'first_name'=>'required|regex:'.$this->alphaexpr, 
          // 'last_name'=>'required|regex:'.$this->alphaexpr,
-           'name'=>'required|string|unique:clients,name|regex:'.$this->alphaAtexpr,   
+           'name'=>'required|string|regex:'.$this->alphaAtexpr,   
         // 'name'=>'required|alpha_num:ascii|unique:users,name',        
          'email'=>'required|email|unique:clients,email',      
          'password'=>'required|between:'. $this->minpass.','. $this->maxpass,

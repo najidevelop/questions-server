@@ -25,13 +25,8 @@ $(document).ready(function() {
   var questionSection = $('#ques-div');
   //questionSection.removeClass('d-block');
   questionSection.fadeOut(1500);
-  questionSection.fadeIn(1500);
-  
-  //questionSection.show(1000);
-       
-    
-    
-  
+  questionSection.fadeIn(1500);  
+  //questionSection.show(1000);  
   });
    
   });

@@ -345,6 +345,8 @@ Route::middleware('auth')->group(function () {
        
 //     });
 // });
+
+
  Route::get('/page/{slug}', [HomeController::class, 'showpage']);
 // Route::post('/sendmail', [MailController::class, 'store']);
 
@@ -352,7 +354,8 @@ Route::middleware('auth')->group(function () {
 
 //site
 Route::get('{lang}/categories', [HomeController::class, 'getcategories']);
-Route::prefix('u')->group(function () {
+Route::prefix('{lang}')->group(function () {
+    Route::get('/home', [HomeController::class, 'index']);
     //Route::get('/{slug}', [ClientController::class, 'send_message']);
     Route::middleware('guest:client')->group(function () {
         Route::get('/register', [ClientController::class, 'create'])->name('register.client');
@@ -364,5 +367,13 @@ Route::prefix('u')->group(function () {
        // 
 
     });
+});
+Route::  middleware(['auth:client', 'verified'])->group(function () {
+    Route::post('u/logout', [ClientController::class, 'logout'])->name('logout.client');
+
+    Route::prefix('{lang}')->group(function () {
+    Route::get('/account', [ClientController::class, 'edit'])->name('client.account');
+   Route::get('/quiz/{slug}', [HomeController::class, 'getcategory']);
+});
 });
 require __DIR__ . '/auth.php';

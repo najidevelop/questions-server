@@ -4,7 +4,7 @@
       <nav class="navbar navbar-light">
         <ul class="navbar-nav d-flex flex-row justify-content-between w-100">
           <li class="nav-item text-center flex-fill">
-            <a class="nav-link nav-link-pad" href="#"><i class="fas fa-home icon-style"></i><br>الرئيسية</a>
+            <a class="nav-link nav-link-pad" href="{{ url($lang,'home') }}"><i class="fas fa-home icon-style"></i><br>الرئيسية</a>
           </li>
           <li class="nav-item text-center flex-fill">
             <a class="nav-link nav-link-pad" href="#"><i class="fas fa-cog icon-style"></i><br>احصائيات</a>
@@ -14,7 +14,7 @@
           </li>
           @if (Auth::guard('client')->check())
           <li class="nav-item text-center flex-fill">
-            <a class="nav-link nav-link-pad" href="{{ route('client.account')  }}"><i class="fas fa-user icon-style"></i><br>الحساب</a>
+            <a class="nav-link nav-link-pad" href="{{ route('client.account',$lang)  }}"><i class="fas fa-user icon-style"></i><br>الحساب</a>
           </li>
           @endif
         </ul>
