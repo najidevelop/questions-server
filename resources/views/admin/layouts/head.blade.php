@@ -35,7 +35,7 @@
   
   <!-- CSS Files -->
   <link id="pagestyle" href="{{ url('assets/admin/css/material-dashboard.css?v=3.0.2') }}" rel="stylesheet" />
-  <link rel="stylesheet" href="{{ url('assets/site/css/asw.css') }}">
+  <link rel="stylesheet" href="{{ url('assets/admin/css/asw.css') }}">
   @yield('css')
   {{-- <link rel="stylesheet" href="{{ url('../public/css') }}/dalil_style.css"> --}}
 </head>
