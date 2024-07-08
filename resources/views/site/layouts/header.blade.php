@@ -26,7 +26,7 @@
                   </div>
             </li>
               <li class="nav-item  ">
-                <a  class="nav-link  nav-link-pad" href="#"> رصيدك:  <span>{{ Auth::guard('client')->user()->balance }}</span></a>
+                <a  class="nav-link  nav-link-pad" href="#"> رصيدك:  <span id="u-balance">{{ Auth::guard('client')->user()->balance }}</span></a>
               </li>
             @else
             <li class="nav-item  ">

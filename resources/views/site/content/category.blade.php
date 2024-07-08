@@ -10,6 +10,10 @@
           </div>
           <!-- محتوى الصفحة -->
           <div class="row main-content">
+
+
+
+
             <!-- تصنيفات -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-4 p-1">
               <a href="#" class="category-link">
@@ -30,36 +34,23 @@
               <form   action ="{{ url($lang,'send') }}" method="POST"  name="send-form"   id="send-form">
                 @csrf
                <input type="hidden" name="cat" value="{{ $catquis['id'] }}">
-               <input type="hidden" name="lang" value="{{ $defultlang->id }}">
-            
+               <input type="hidden" name="lang" value="{{ $defultlang->id }}">            
               <button id="start-button" class="btn btn-primary start-btn">ابدأ</button>
               </form>
             </div>
             <div class="col-12 " id="ques-div">
               <div id="question-section" class="d-none  question-sec">
-                <h3 id="question-text" class="mb-4">ما هو السؤال؟</h3>
+                <h3 id="question-text" data="" class="mb-4">ما هو السؤال؟</h3>
+           <div id="ans-container">   
                 <ul id="answers-list" class="list-group ques-group">
                  <li class="list-group-item d-flex align-items-center list-group-item-default" id="1">
                     <span class="answer-indicator"></span>
                     <span class="answer-text">إجابة 1</span>
                   </li>
-                  <li class="list-group-item d-flex align-items-center list-group-item-default" id="2">
-                    <span class="answer-indicator"></span>
-                    <span class="answer-text">إجابة 2</span>
-                  </li>
-                  <li class="list-group-item d-flex align-items-center list-group-item-default"id="3">
-                    <span class="answer-indicator"></span>
-                    <span class="answer-text">إجابة 3</span>
-                  </li>
-                  <li class="list-group-item d-flex align-items-center list-group-item-default" id="4">
-                    <span class="answer-indicator"></span>
-                    <span class="answer-text">إجابة 4</span>
-                  </li>
-                  <li class="list-group-item d-flex align-items-center list-group-item-default" id="5">
-                    <span class="answer-indicator"></span>
-                    <span class="answer-text">إجابة 5</span>
-                  </li>
+                  
+                
                 </ul>
+              </div>
               </div>
             </div>
           </div>
@@ -68,5 +59,20 @@
         </main>
       </div>
     </div>
+    <form   action ="{{ url($lang,'checkans') }}" method="POST"  name="check-form"   id="check-form">
+      @csrf
+       
+    </form>
+@endsection
+@section('js')
+<script src="{{ url('assets/site/js/sweetalert.min.js') }}"></script>
+ 
+<script src="{{ url('assets/site/js/quiz.js') }}"></script>
+<script  >
 
+$(document).ready(function() {
+  
+   
+});
+</script>
 @endsection
