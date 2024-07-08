@@ -27,7 +27,13 @@
              <!-- قسم الأسئلة -->
           <div class="row ques-row">
             <div class="col-12 text-center mb-4">
+              <form   action ="{{ url($lang,'send') }}" method="POST"  name="send-form"   id="send-form">
+                @csrf
+               <input type="hidden" name="cat" value="{{ $catquis['id'] }}">
+               <input type="hidden" name="lang" value="{{ $defultlang->id }}">
+            
               <button id="start-button" class="btn btn-primary start-btn">ابدأ</button>
+              </form>
             </div>
             <div class="col-12 " id="ques-div">
               <div id="question-section" class="d-none  question-sec">

@@ -1055,9 +1055,7 @@ class SiteDataController extends Controller
             },
             'mediaposts.mediastore'
         ])->where('status', 1)->where('slug', $slug)->first();
-
-    $object_arr=   $this->map_quiz_category( $Dblist, $langcode);
-
+    $object_arr= $this->map_quiz_category( $Dblist, $langcode);
         return $object_arr;
     }
 
@@ -1081,7 +1079,7 @@ class SiteDataController extends Controller
             $meta_key= $category->meta_key;
         }
         return [
-           // 'id' => $category->id,
+            'id' => $category->id,
             'slug' =>  $slug,
             'meta_key' =>  $meta_key,
          //   'code' => $category->code,

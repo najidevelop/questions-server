@@ -9,10 +9,12 @@ use App\Models\Language;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Http\Requests\Question\StoreQuesRequest;
+use App\Http\Requests\Question\SendQuesRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
- 
+use Illuminate\Support\Arr;
+
 class QuestionController extends Controller
 {
     /**
@@ -55,7 +57,7 @@ class QuestionController extends Controller
             $i = 0;
             foreach ($formdata['answer_content'] as $key => $option) {
                 if (!is_null($option)) {
-                    if ( trim($option) != "") {
+                    if (trim($option) != "") {
                         $i++;
                     }
                 }
@@ -78,7 +80,7 @@ class QuestionController extends Controller
                         $answer = new Answer();
                         $answer->question_id = $newObj->id;
                         $answer->sequence = $key;
-                        $answer->content =  trim($option);
+                        $answer->content = trim($option);
                         $answer->is_correct = $formdata['is_correct'] == $key ? 1 : 0;
                         $answer->status = 1;
                         $answer->createuser_id = Auth::user()->id;
@@ -129,11 +131,11 @@ class QuestionController extends Controller
         if ($validator->fails()) {
             return response()->json($validator);
         } else {
-// //check if answers exist at least 2
+            // //check if answers exist at least 2
             $i = 0;
             foreach ($formdata['answer_content'] as $key => $option) {
                 if (!is_null($option)) {
-                    if ( trim($option) != "") {
+                    if (trim($option) != "") {
                         $i++;
                     }
                 }
@@ -146,10 +148,10 @@ class QuestionController extends Controller
                     'status' => isset($formdata["status"]) ? 1 : 0,
                     'updateuser_id' => Auth::user()->id,
                 ]);
-    
+
                 foreach ($formdata['answer_content'] as $key => $option) {
                     if (!is_null($option)) {
-                        if(trim($option) != ""){
+                        if (trim($option) != "") {
                             $iscorrect = $formdata['is_correct'] == $key ? 1 : 0;
                             $res = Answer::updateOrCreate(
                                 ['question_id' => $id, 'sequence' => $key]
@@ -163,21 +165,61 @@ class QuestionController extends Controller
                                     'type' => 'text',
                                 ]
                             );
-                             }else{
-                                $res = Answer::where('question_id', $id)->where('sequence', $key)->delete();
-                          }                    
-                    }else{
+                        } else {
+                            $res = Answer::where('question_id', $id)->where('sequence', $key)->delete();
+                        }
+                    } else {
                         $res = Answer::where('question_id', $id)->where('sequence', $key)->delete();
-                           }
+                    }
                 }
-            }   
-            else {
+            } else {
                 return response()->json("fewanswers");
-            }     
+            }
             return response()->json("ok");
         }
     }
+    public function sendquiz(SendQuesRequest $request, $lang)
+    {
+        $formdata = $request->all();
+        $validator = Validator::make(
+            $formdata,
+            $request->rules(),
+            $request->messages()
+        );
+        if ($validator->fails()) {
+            return response()->json($validator);
+        } else {
 
+            $formdata['lang'];
+            $client_id = auth()->guard('client')->user()->id;
+            $category_id = $formdata['cat'];
+            $lang_id = $formdata['lang'];
+            $queslist = Question::where(['category_id' => $category_id, 'lang_id' => $lang_id])
+                ->whereDoesntHave('answers.answersclients', function ($query) use ($client_id) {
+                    $query->where('client_id', $client_id);
+                })->select('id')->pluck('id');
+            $randid = Arr::random($queslist->toArray());
+            $ques = Question::with('answers')->find($randid);
+            $quesmaped = $this->quesmap($ques);
+            return response()->json($quesmaped);
+        }
+    }
+    public function quesmap(Question $ques)
+    {
+        $answers = $ques->answers->map(function ($answer) {
+            return [
+                "id" => $answer->id,
+                "content" => $answer->content,
+                "sequence" => $answer->sequence,
+            ];
+        });
+        $quesArr = [
+            "id" => $ques->id,
+            "content" => $ques->content,
+            "answers" => $answers
+        ];
+        return $quesArr;
+    }
     /**
      * Remove the specified resource from storage.
      */

@@ -374,6 +374,7 @@ Route::  middleware(['auth:client', 'verified'])->group(function () {
     Route::prefix('{lang}')->group(function () {
     Route::get('/account', [ClientController::class, 'edit'])->name('client.account');
    Route::get('/quiz/{slug}', [HomeController::class, 'getcategory']);
+   Route::post('/send', [QuestionController::class, 'sendquiz']);
 });
 });
 require __DIR__ . '/auth.php';
