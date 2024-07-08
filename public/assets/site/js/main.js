@@ -1,11 +1,6 @@
 $(document).ready(function() {
   
-    $('#start-button').click(function() {
-        $('#question-section').removeClass('d-none').addClass('d-block');
-  
-     
-    });
-   
+ 
 
     var correctAnswerIndex = 2; // مؤشر الإجابة الصحيحة (0 ل "إجابة 1"، 1 ل "إجابة 2"، وهكذا)
   $('.list-group-item').click(function() {
