@@ -3,7 +3,8 @@
   @php
       $sitedataCtrlr=new App\Http\Controllers\Web\SiteDataController();  
      $mainarr=$sitedataCtrlr->FillStaticData();
-   $f_menu=  $sitedataCtrlr->getbycode($defultlang->id,['footer-menu']);
+   //$f_menu=  $sitedataCtrlr->getbycode($defultlang->id,['footer-menu']);
+   
     // $mainmenuarr=$sitedataCtrlr->getmenubyloc('main-menu');
      //$footermenuarr=$sitedataCtrlr->getmenubyloc('footer-menu');
      
