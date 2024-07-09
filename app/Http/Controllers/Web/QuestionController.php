@@ -260,7 +260,7 @@ class QuestionController extends Controller
                 $newObj->answer_type = $ansmodel->type;                     
                 // $newObj->question_file = $formdata['question_file'];
                 // $newObj->answer_file = $formdata['answer_file'];
-                $newObj->save();
+              //  $newObj->save();// temmmmmmmmmmmmmmmmmmmmmmmmmmp
                 $client=Client::find($client_id);
                 if ($ansmodel->is_correct == 1) {
                     // correct answer

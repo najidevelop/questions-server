@@ -266,7 +266,8 @@ body {
 	padding-right:0px;
 }
 .ques-row{
-width:100%
+width:100%;
+height: 600px;
 }
 .list-group-item-default{
 	 background-color:#0866FF;

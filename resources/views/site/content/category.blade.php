@@ -39,7 +39,7 @@
               </form>
             </div>
             <div class="col-12 " id="ques-div">
-              <div id="question-section" class="d-none  question-sec">
+              <div id="question-section" class="question-sec" style="display: none">
                 <h3 id="question-text" data="" class="mb-4">ما هو السؤال؟</h3>
            <div id="ans-container">   
                 <ul id="answers-list" class="list-group ques-group">

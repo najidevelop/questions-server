@@ -51,7 +51,8 @@ $(document).ready(function() {
 			$('#ans-container').html(uldep);
 		
 					//noteSuccess(); 	
-					$('#question-section').removeClass('d-none').addClass('d-block');
+					$('#question-section').show();
+					$('#ques-div').fadeIn(1000);
 					 
 				}  
 
@@ -83,8 +84,30 @@ $(document).ready(function() {
 				if (data.length == 0) {
 					noteError();
 				} else   {
-					animateresult($('#'+ansid),data.correct_ans)	;
 					
+					// hide 
+				//	executeSequentially([animateresult($('#'+ansid),data.correct_ans), hideoldques, shownewques], 2000);
+					//animateresult($('#'+ansid),data.correct_ans);
+					animateresult($('#'+ansid),data.correct_ans)
+					setTimeout(hideoldques, 1000); // 2 ثانية بعد clickstart
+					setTimeout(shownewques, 2000); // 2 ثانية بعد fun2 (4 ثواني بعد clickstart)
+				//	setTimeout(fun4, 6000); // 2 ثانية بعد fun3 (6 ثواني بعد clickstart)
+				
+					 
+						//var questionSection = $('#ques-div');
+						//$('#ques-div').delay(2000).fadeOut(1500);
+		 //	setTimeout(clickstart, 2000);
+			// setTimeout(shownewques, 5000);
+		//questionSection.fadeIn(1500);
+		
+				 
+					
+	//	$('#start-button').trigger('click');	
+		//questionSection.fadeIn(1500);
+					 
+			
+
+	//end hide 
 					if(data.result==1){
 						$('#u-balance').text(data.balance);
 						noteSuccess() ;
@@ -108,7 +131,7 @@ $(document).ready(function() {
    //click on answer event
    var ansid='';
    
-   var correctAnswerIndex = 0; // مؤشر الإجابة الصحيحة (0 ل "إجابة 1"، 1 ل "إجابة 2"، وهكذا)
+   //var correctAnswerIndex = 0; // مؤشر الإجابة الصحيحة (0 ل "إجابة 1"، 1 ل "إجابة 2"، وهكذا)
    $('#ans-container').on('click','.list-group-item', function (e) {
 
   ansid= $(this).attr('id');  
@@ -120,7 +143,15 @@ $(document).ready(function() {
      
     */
    });
-
+   function clickstart(){
+	$('#start-button').trigger('click');
+   }
+   function hideoldques(){
+	$('#ques-div').fadeOut(1000);
+   }
+   function shownewques(){
+	$('#start-button').trigger('click');
+   }
 function animateresult(selectedObj,correct_ans){
 	//show correct answer
 	correct_ans='ans-'+correct_ans;
@@ -136,15 +167,13 @@ function animateresult(selectedObj,correct_ans){
 	selectedObj.addClass('list-group-item-incorrect');
 	}
 	
-	var questionSection = $('#ques-div');
-   
-	questionSection.fadeOut(1500);
-	 
-	$('#start-button').trigger('click');	
-	questionSection.fadeIn(1500);
+	
 }
 
    // end click
+   
+ 
+
   });
   function noteSuccess() {
     swal("صح ");
