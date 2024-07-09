@@ -142,7 +142,7 @@ Route::middleware(['auth:web', 'verified'])->prefix('admin')->group(function () 
   
             Route::post('/updatephone', [SettingController::class, 'updatephone']);
             Route::post('/updateemail', [SettingController::class, 'updateemail']);
-            Route::get('/translate', [PostController::class, 'translate']);
+            Route::get('/translate', [TranslateController::class, 'translate']);
 ///////////////////////// saraha
             Route::get('/general', [SettingController::class, 'index']);
                   //////////////siteinfo
@@ -293,15 +293,15 @@ Route::prefix('mediapost')->group(function () {
 */
 //question admin
 Route::prefix('translate')->group(function () {
-    Route::post('/update/{id}', [TranslateController::class, 'update'])->name('post.update');
+   // Route::post('/update/{id}', [TranslateController::class, 'update'])->name('post.update');
     
     Route::get('/showbycatid/{id}', [TranslateController::class, 'showbycatid']);
-    Route::get('/create/{id}', [TranslateController::class, 'createwithcatid']);
-    Route::post('/storepost', [TranslateController::class, 'storepost']);
-    Route::post('/updatepost/{id}', [TranslateController::class, 'updatepost']);
+    Route::get('/create', [TranslateController::class, 'createwithcatid']);
+    Route::post('/store', [TranslateController::class, 'storepost']);
+    Route::post('/update/{id}', [TranslateController::class, 'updatepost']);
     Route::delete('/destroy/{id}', [TranslateController::class, 'destroy']);
-    Route::get('/editpost/{id}', [TranslateController::class, 'editpost']);
-    Route::post('/upload', [TranslateController::class, 'uploadLargeFiles'])->name('post.upload');;
+    Route::get('/edit/{id}', [TranslateController::class, 'editpost']);
+   // Route::post('/upload', [TranslateController::class, 'uploadLargeFiles'])->name('post.upload');;
  
 }); 
 

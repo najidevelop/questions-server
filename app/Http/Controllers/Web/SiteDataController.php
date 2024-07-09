@@ -1092,6 +1092,55 @@ class SiteDataController extends Controller
         ];
     }
 
+    //translate
+    public function getbycode($lang_id,$codearr)
+    {        //projects and refs
+        $Dbitem = Category::with([            
+            'posts' => function ($q) use ($lang_id,$codearr) {
+                $q->where('status', 1)->whereIn('code', $codearr)
+                    ->with([
+                        'langposts' => function ($q) use ($lang_id) {
+                            $q->where('lang_id', $lang_id);
+                        }
+
+                    ]);
+            }
+        ])->where('code', 'translate')->first();
+        $item = $this->maptranslist($Dbitem->posts);
+        return $item;
+    }
+    public function maptranslist($posts)
+    {
+        $List = $posts->map(function ($postmodel) {
+            $tr_title = '';
+            $tr_content = '';
+            if ($postmodel->langposts->first()) {
+                $tr_title = $postmodel->langposts->first()->title_trans;
+                $tr_content = $postmodel->langposts->first()->content_trans;
+            }           
+            return [                
+                'title' => $postmodel->title,                 
+                'code' => $postmodel->code,
+                'tr_title' => $tr_title,
+                'tr_content' => $tr_content,            
+            ];
+        });
+        return $List;
+
+    }
+    public function gettrans($tr_arr,$title,$code=null)
+    {
+        $tr_val="";
+     if(isset($code)){
+        $tr_val=$tr_arr->where('title',$title)->where('code',$code)->first()['tr_title'];
+     }else{
+        $tr_val=$tr_arr->where('title',$title)->first()['tr_title'];
+     }
+ 
+        return $tr_val;
+    }
+   
+
     /**
      * Show the form for creating a new resource.
      */

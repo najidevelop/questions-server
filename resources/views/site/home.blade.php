@@ -8,7 +8,7 @@
         </div>
         <!-- محتوى الصفحة -->
         <div class="row main-content">
-    <!-- تصنيفات -->
+    <!-- تصنيفات -->     
         @include('site.content.sub-categories')  
       
         </div>

@@ -20,7 +20,7 @@ class StorePostRequest extends FormRequest
        return[
        'title'=>'required|string',   
  
-          
+       'code'=>'sometimes|string',  
         
   
        ];   

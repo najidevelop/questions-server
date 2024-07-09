@@ -42,7 +42,8 @@ class HomeController extends Controller
   //  $transarr['langs']->select('code')->get();
  //   return  $sitedctrlr->getlangscod()  ;
     //
-
+    
+     
    if(isset($formdata['lang']))
    {
       $lang=$formdata['lang'];
@@ -52,16 +53,22 @@ class HomeController extends Controller
     //  $lang= $formdata["lang"];
     $transarr=$sitedctrlr->FillTransData($lang);
     $defultlang=$transarr['langs']->first();
+    $home_page=$sitedctrlr->getbycode($defultlang->id,['home-page']);
    // $homearr= $sitedctrlr->gethomedata( $defultlang->id);
    $catlist= $sitedctrlr-> getquescatbyloc('cats',$defultlang->id);
-      return view('site.home',['lang'=>$lang, 'transarr'=>$transarr,'defultlang'=>$defultlang, 'active_item'=>$active,'categories'=>$catlist]);
+      return view('site.home',['lang'=>$lang, 'transarr'=>$transarr,'defultlang'=>$defultlang, 'active_item'=>$active,'categories'=>$catlist,
+      'home_page'=>$home_page,'sitedataCtrlr'=>$sitedctrlr,
+   ]);
      }else{
       $transarr=$sitedctrlr->FillTransData();
       $defultlang=$transarr['langs']->first();
       $lang=  $defultlang->code;
       $catlist= $sitedctrlr-> getquescatbyloc('cats',$defultlang->id);
+       $home_page=$sitedctrlr->getbycode($defultlang->id,['home-page']);
       //$homearr= $sitedctrlr->gethomedata( $defultlang->id);
-      return view('site.home',['transarr'=>$transarr,'lang'=>$lang, 'defultlang'=>$defultlang,'active_item'=>$active,'categories'=>$catlist]);
+      return view('site.home',['transarr'=>$transarr,'lang'=>$lang, 'defultlang'=>$defultlang,'active_item'=>$active,'categories'=>$catlist,
+      'home_page'=>$home_page,'sitedataCtrlr'=>$sitedctrlr,
+   ]);
      }
       
     }
