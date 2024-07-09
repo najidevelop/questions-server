@@ -196,10 +196,18 @@ class QuestionController extends Controller
             $client_id = auth()->guard('client')->user()->id;
             $category_id = $formdata['cat'];
             $lang_id = $formdata['lang'];
-            $queslist = Question::where(['category_id' => $category_id, 'lang_id' => $lang_id])
+            $catmodel=Category::find($category_id);
+            if($catmodel->notes=='general'){
+                $queslist = Question::where('lang_id',$lang_id)
                 ->whereDoesntHave('answers.answersclients', function ($query) use ($client_id) {
                     $query->where('client_id', $client_id);
                 })->select('id')->pluck('id');
+            }else{
+                $queslist = Question::where(['category_id' => $category_id, 'lang_id' => $lang_id])
+                ->whereDoesntHave('answers.answersclients', function ($query) use ($client_id) {
+                    $query->where('client_id', $client_id);
+                })->select('id')->pluck('id');
+            }           
                if($queslist->count()>0){
                 $randid = Arr::random($queslist->toArray());
                 $ques = Question::with('answers')->find($randid);
