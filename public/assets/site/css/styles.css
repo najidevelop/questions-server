@@ -23,7 +23,7 @@ body {
 
 .category-card img {
   width: 100%;
-  max-height: 158px;
+  max-height: 151px;
   transition: transform 0.3s ease;
 }
 .category-card-full img { 

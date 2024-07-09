@@ -6,6 +6,7 @@ $(document).ready(function() {
    //start form 
    $('#start-button').on('click', function (e) {
 		e.preventDefault();
+		$(this).hide(500);
   var formid = $(this).closest("form").attr('id');
 		sendform('#' + formid); 
 				   

@@ -15,7 +15,8 @@
 
 
             <!-- تصنيفات -->
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-4 p-1">
+
+            {{-- <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-4 p-1">
               <a href="#" class="category-link">
                 <div class="category-card category-card-full">
                   <img src="{{ $catquis['image_path'] }}" alt="{{ $catquis['image_alt'] }}">
@@ -27,7 +28,7 @@
          <div class="category-details">
                     <p>{{Str::of($catquis['tr_content'])->toHtmlString()}}</p>
                   </div>
-            </div>      
+            </div>       --}}
              <!-- قسم الأسئلة -->
           <div class="row ques-row">
             <div class="col-12 text-center mb-4">

@@ -22,7 +22,7 @@ use  App\Http\Controllers\Web\SocialController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Web\CategoryQuesController;
 use App\Http\Controllers\Web\LevelController;
- 
+ use App\Http\Controllers\Web\TranslateController;
 
 //site
 use App\Http\Controllers\HomeController;
@@ -291,6 +291,21 @@ Route::prefix('mediapost')->group(function () {
 
    });
 */
+//question admin
+Route::prefix('translate')->group(function () {
+    Route::post('/update/{id}', [TranslateController::class, 'update'])->name('post.update');
+    
+    Route::get('/showbycatid/{id}', [TranslateController::class, 'showbycatid']);
+    Route::get('/create/{id}', [TranslateController::class, 'createwithcatid']);
+    Route::post('/storepost', [TranslateController::class, 'storepost']);
+    Route::post('/updatepost/{id}', [TranslateController::class, 'updatepost']);
+    Route::delete('/destroy/{id}', [TranslateController::class, 'destroy']);
+    Route::get('/editpost/{id}', [TranslateController::class, 'editpost']);
+    Route::post('/upload', [TranslateController::class, 'uploadLargeFiles'])->name('post.upload');;
+ 
+}); 
+
+
 });
 
 /*
